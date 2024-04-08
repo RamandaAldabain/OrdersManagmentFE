@@ -1,0 +1,41 @@
+<style>
+    body {
+      background-color: #f1f1f1;
+    }
+    .container {
+      width: 400px;
+      margin: 100px auto;
+      padding: 40px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+
+<div class="container">
+    <h2 class="mb-4font-weight-bold" style="color:#0d6efd">Login</h2>
+    <form [formGroup]="loginForm">
+      <div class="mb-3">
+        <label for="email" class="form-label">Email address</label>
+        <input type="email" formControlName="email" class="form-control" id="email" aria-describedby="emailHelp">
+        <small class="text-danger" *ngIf="loginForm.controls['email'].dirty && loginForm.hasError('required','email')">
+          Email is required
+        </small>
+        <small class="text-danger" *ngIf="loginForm.controls['email'].dirty && loginForm.hasError('pattern','email')">Invalid email format</small>
+
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" formControlName="password" class="form-control" id="password">
+        <small class="text-danger" *ngIf="loginForm.controls['password'].dirty && loginForm.hasError('required','password')"> 
+         Password is required
+        </small>
+      </div>
+      <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="remember">
+        <label class="form-check-label" for="remember">Remember me</label>
+      </div>
+      <button type="submit" (click)="onSubmit()" class="btn btn-primary mb-3">Login</button>
+      <p class="small">Don't have an account? <a routerLink="/signup">Sign up</a></p>      
+    </form>
+  </div>
