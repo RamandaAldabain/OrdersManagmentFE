@@ -32,7 +32,7 @@ export class ItemsComponent  implements OnInit ,AfterViewInit{
   filteredItems: any[] = [];
   searchText: string = '';
   currentUserRole : string ="";
-  CurrentUserId : string ="";
+  currentUserId : string ="";
 
  constructor(private itemsService : ItemsService,private orderService: OrdersService,private modalService: NgbModal ,
    private accountService: AccountService, private userStore: UserStoreService){
@@ -45,7 +45,7 @@ export class ItemsComponent  implements OnInit ,AfterViewInit{
   this.userStore.getIdFromStore()
   .subscribe(val=>{
     const id = this.accountService.getIdFromToken();
-    this.CurrentUserId = val || id
+    this.currentUserId = val || id
   });
 
   this.userStore.getRoleFromStore()

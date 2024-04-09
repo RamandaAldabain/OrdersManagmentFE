@@ -1,6 +1,8 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { OrdersService } from '../Services/orders.service';
 import { OrderDto } from '../Models/orderDto';
+import { AccountService } from '../Services/account.service';
+import { UserStoreService } from '../Services/user-store.service';
 
 @Component({
   selector: 'app-orders',
@@ -13,12 +15,18 @@ export class OrdersComponent {
   currentPage: number = 1;
   totalItems: number = 0;
   @ViewChild('successModal', {static : true}) successModal!:ElementRef;
-
-  constructor(private orderService:OrdersService ){}
+  currentUserId : string ="";
+  constructor(private orderService:OrdersService , private accountService: AccountService, private userStore: UserStoreService ){}
   ngOnInit(): void { 
-    this.getUserAllOrders();
+   
+    this.userStore.getIdFromStore()
+    .subscribe(val=>{
+      const id = this.accountService.getIdFromToken();
+      this.currentUserId = val || id
+    });
+    this.getUserAllOrders(this.currentUserId);
   }
-  getUserAllOrders(userId : string="022b44cb-0e15-42a4-aace-0b792915e1c1"){
+  getUserAllOrders(userId : string){
     return this.orderService.getAllUserOrders(userId).subscribe((orders: OrderDto[]) => {
       this.ordersList = orders;
   
